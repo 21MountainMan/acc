@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 
 public class ItemCategoriesFragment extends Fragment {
@@ -36,6 +38,21 @@ public class ItemCategoriesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_item_categories, container, false);
+
+        final Item bed = new Item("Modern Chair");
+
+        Button b = (Button)rootView.findViewById(R.id.button);
+
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, ItemViewFragment.newInstance(bed))
+                        .commit();
+            }
+        });
+
         return rootView;
     }
 
