@@ -8,11 +8,16 @@ import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 
 public class ItemCategoriesFragment extends Fragment {
 
+    private ArrayList<ItemCategory> itemCategories;
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -32,6 +37,7 @@ public class ItemCategoriesFragment extends Fragment {
     }
 
     public ItemCategoriesFragment() {
+        itemCategories = new ArrayList<>();
     }
 
     @Override
@@ -39,19 +45,13 @@ public class ItemCategoriesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_item_categories, container, false);
 
-        final Item bed = new Item("Modern Chair");
+        ListView itemCategoriesListView = (ListView)rootView.findViewById(R.id.itemCategoriesListView);
 
-        Button b = (Button)rootView.findViewById(R.id.button);
-
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, ItemViewFragment.newInstance(bed))
-                        .commit();
-            }
-        });
+        ArrayAdapter<ItemCategory> arrayAdapter = new ArrayAdapter<ItemCategory>( // may have to replace with baseadapter
+                rootView.getContext(),
+                android.R.layout.simple_list_item_1,
+                itemCategories
+        );
 
         return rootView;
     }
@@ -61,6 +61,16 @@ public class ItemCategoriesFragment extends Fragment {
         super.onAttach(activity);
         ((MainActivity) activity).onSectionAttached(
                 getArguments().getInt(ARG_SECTION_NUMBER));
+    }
+
+    public void setList(ArrayList<ItemCategory> arrayList) {
+        itemCategories = arrayList;
+        updateListView();
+    }
+
+    public void updateListView() {
+        ListView list = (ListView)getActivity().findViewById(R.id.itemCategoriesListView);
+        ((ArrayAdapter<ItemCategory>)list.getAdapter()).notifyDataSetChanged();
     }
 }
 

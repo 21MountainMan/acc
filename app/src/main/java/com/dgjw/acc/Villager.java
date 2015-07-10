@@ -10,7 +10,7 @@ public class Villager implements Displayable{
     private String name;
     private Date birthday;
     private String favoriteStyle;
-    private String dislikedStlye;
+    private String dislikedStyle;
     private String favoriteColor;
     private String bean;
     private int milk;

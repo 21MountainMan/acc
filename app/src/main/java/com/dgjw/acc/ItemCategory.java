@@ -1,7 +1,5 @@
 package com.dgjw.acc;
 
-import android.widget.ArrayAdapter;
-
 import java.util.ArrayList;
 
 /**
@@ -12,8 +10,26 @@ public class ItemCategory {
     ArrayList<Item> items = new ArrayList<>();
     private String name;
 
-    ItemCategory(String name, ArrayList<Item> items) {
+    ItemCategory(String name) {
         this.name  = name;
-        this.items = items;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public ArrayList<Item> getItems() {
+        return items;
+    }
+
+    public void addItem(Item i) {
+        items.add(i);
+    }
+
+    public void listItems() {
+        System.out.println(name + ": ");
+        for (int i = 0; i < items.size(); i++) {
+            System.out.println(items.get(i).getName());
+        }
     }
 }
