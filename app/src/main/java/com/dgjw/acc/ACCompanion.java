@@ -36,7 +36,7 @@ public class ACCompanion {
         for (int count = 0; count < fields.length; count++) {
             // get the name of the .csv file from raw folder
             String fieldName = fields[count].getName();
-            System.out.println(fieldName);
+            
             /*
             Generic item parsing
              */
