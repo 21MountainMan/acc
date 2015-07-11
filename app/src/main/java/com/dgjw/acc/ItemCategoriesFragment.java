@@ -17,7 +17,6 @@ import java.util.ArrayList;
 
 public class ItemCategoriesFragment extends Fragment {
 
-    private ArrayList<ItemCategory> itemCategories;
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -37,7 +36,6 @@ public class ItemCategoriesFragment extends Fragment {
     }
 
     public ItemCategoriesFragment() {
-        itemCategories = new ArrayList<>();
     }
 
     @Override
@@ -45,13 +43,21 @@ public class ItemCategoriesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_item_categories, container, false);
 
+        ArrayList<ItemCategory> itemCategories;
+
+        ACCompanion acc = new ACCompanion(rootView.getContext());
+        acc.loadItems();
+        itemCategories = acc.getItemCategories();
+
         ListView itemCategoriesListView = (ListView)rootView.findViewById(R.id.itemCategoriesListView);
 
-        ArrayAdapter<ItemCategory> arrayAdapter = new ArrayAdapter<ItemCategory>( // may have to replace with baseadapter
+        ArrayAdapter<ItemCategory> arrayAdapter = new ArrayAdapter<ItemCategory>(
                 rootView.getContext(),
                 android.R.layout.simple_list_item_1,
                 itemCategories
         );
+
+        itemCategoriesListView.setAdapter(arrayAdapter);
 
         return rootView;
     }
@@ -63,14 +69,5 @@ public class ItemCategoriesFragment extends Fragment {
                 getArguments().getInt(ARG_SECTION_NUMBER));
     }
 
-    public void setList(ArrayList<ItemCategory> arrayList) {
-        itemCategories = arrayList;
-        updateListView();
-    }
-
-    public void updateListView() {
-        ListView list = (ListView)getActivity().findViewById(R.id.itemCategoriesListView);
-        ((ArrayAdapter<ItemCategory>)list.getAdapter()).notifyDataSetChanged();
-    }
 }
 

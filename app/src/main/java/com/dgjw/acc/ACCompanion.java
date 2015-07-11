@@ -22,14 +22,13 @@ public class ACCompanion {
 
     ACCompanion(Context ctx) {
         this.ctx = ctx;
-        loadRawAssets();
     }
 
     public ArrayList<ItemCategory> getItemCategories() {
         return itemCategories;
     }
 
-    private void loadRawAssets() {
+    public void loadItems() {
 
         // get a list of the raw assets
         Field[] fields = R.raw.class.getFields();
@@ -37,13 +36,15 @@ public class ACCompanion {
         for (int count = 0; count < fields.length; count++) {
             // get the name of the .csv file from raw folder
             String fieldName = fields[count].getName();
-
+            System.out.println(fieldName);
             /*
             Generic item parsing
              */
             // get the contents of the file
             String fileContents = readRawFile(fieldName);
-            String splitFileContents[] = fileContents.split(",");
+            String splitFileContents[] = null;
+
+            splitFileContents = fileContents.split(",");
 
             // add a new item category named after the corresponding raw asset
             itemCategories.add(new ItemCategory(fieldName));

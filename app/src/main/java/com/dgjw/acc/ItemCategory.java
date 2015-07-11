@@ -32,4 +32,9 @@ public class ItemCategory {
             System.out.println(items.get(i).getName());
         }
     }
+
+    @Override
+    public String toString() {
+        return getName();
+    }
 }

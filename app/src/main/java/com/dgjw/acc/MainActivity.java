@@ -43,6 +43,9 @@ public class MainActivity extends ActionBarActivity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
         acc = new ACCompanion(this);
+        if (getSupportFragmentManager().findFragmentByTag(ITEM_CATEGORIES_FRAGMENT_TAG) != null) {
+            System.out.println(getSupportFragmentManager().findFragmentByTag(ITEM_CATEGORIES_FRAGMENT_TAG).toString());
+        }
     }
 
     @Override
