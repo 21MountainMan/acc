@@ -2,6 +2,7 @@ package com.dgjw.acc;
 
 import java.util.ArrayList;
 
+
 /**
  * Created by johnathon on 7/3/2015.
  */
@@ -35,6 +36,7 @@ public class ItemCategory {
 
     @Override
     public String toString() {
-        return getName();
+        //return WordUtils.capitalize(getName().replace('_', ' ')); need to figure out how to add library
+        return getName().replace('_', ' ');
     }
 }
