@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -58,6 +59,18 @@ public class ItemCategoriesFragment extends Fragment {
         );
 
         itemCategoriesListView.setAdapter(arrayAdapter);
+
+        itemCategoriesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final ItemCategory itemCategory = (ItemCategory)parent.getItemAtPosition(position);
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.container,
+                                ItemViewFragment.newInstance(new Item("myItem")))
+                        .addToBackStack(null)
+                        .commit(); // this should actually open up the list of items in the category. just opening an itemView for now
+            }
+        });
 
         return rootView;
     }
