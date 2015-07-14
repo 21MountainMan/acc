@@ -44,15 +44,14 @@ public class ItemCategoriesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_item_categories, container, false);
 
-        ArrayList<ItemCategory> itemCategories;
+        ArrayList<String> itemCategories;
 
         ACCompanion acc = new ACCompanion(rootView.getContext());
-        acc.loadItems();
         itemCategories = acc.getItemCategories();
 
         ListView itemCategoriesListView = (ListView)rootView.findViewById(R.id.itemCategoriesListView);
 
-        ArrayAdapter<ItemCategory> arrayAdapter = new ArrayAdapter<ItemCategory>(
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
                 rootView.getContext(),
                 android.R.layout.simple_list_item_1,
                 itemCategories
@@ -63,7 +62,7 @@ public class ItemCategoriesFragment extends Fragment {
         itemCategoriesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final ItemCategory itemCategory = (ItemCategory)parent.getItemAtPosition(position);
+                final String itemCategory = (String)parent.getItemAtPosition(position);
                 getFragmentManager().beginTransaction()
                         .replace(R.id.container,
                                 ItemViewFragment.newInstance(new Item("myItem")))

@@ -17,18 +17,39 @@ import java.util.ArrayList;
 public class ACCompanion {
 
     ArrayList<Parcelable> items = new ArrayList<>();
-    ArrayList<ItemCategory> itemCategories = new ArrayList<>();
+    ArrayList<String> itemCategories = new ArrayList<>();
     Context ctx;
 
     ACCompanion(Context ctx) {
         this.ctx = ctx;
+        loadItemCategories();
     }
 
-    public ArrayList<ItemCategory> getItemCategories() {
+    public ArrayList<String> getItemCategories() {
         return itemCategories;
     }
 
-    public void loadItems() {
+    public ArrayList<Parcelable> loadItems(String itemCategory) {
+        /*
+            Generic item parsing
+        */
+        // get the contents of the file
+        String fileContents = readRawFile(itemCategory);
+        String splitFileContents[] = null;
+
+        ArrayList<Parcelable> items = new ArrayList<>();
+
+        splitFileContents = fileContents.split(",");
+
+        // create new items and add them to the list in the ItemCategory
+        for (int i = 0; i < splitFileContents.length; i++) {
+            items.add(new Item(splitFileContents[i]));
+        }
+
+        return items;
+    }
+
+    public void loadItemCategories() {
 
         // get a list of the raw assets
         Field[] fields = R.raw.class.getFields();
@@ -37,23 +58,8 @@ public class ACCompanion {
             // get the name of the .csv file from raw folder
             String fieldName = fields[count].getName();
 
-            /*
-            Generic item parsing
-             */
-            // get the contents of the file
-            String fileContents = readRawFile(fieldName);
-            String splitFileContents[] = null;
-
-            splitFileContents = fileContents.split(",");
-
             // add a new item category named after the corresponding raw asset
-            itemCategories.add(new ItemCategory(fieldName));
-
-            // create new items and add them to the list in the ItemCategory
-            for (int i = 0; i < splitFileContents.length; i++) {
-                itemCategories.get(itemCategories.size() - 1)
-                              .addItem(new Item(splitFileContents[i]));
-            }
+            itemCategories.add(fieldName);
         }
     }
 

@@ -52,6 +52,11 @@ public class MainActivity extends ActionBarActivity
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
+
+        for(int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
+            fragmentManager.popBackStack();
+        }
+        
         switch (position) {
             case 0:
                 fragmentManager.beginTransaction()
